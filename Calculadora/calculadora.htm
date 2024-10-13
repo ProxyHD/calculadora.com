@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Estilizada</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            background: linear-gradient(to bottom right, #2b5876, #4e4376); /* Fundo mais bonito */
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            z-index: 10;
+            flex-direction: column;
+            border-radius: 10px;
+        }
+        .loader h1 {
+            margin: 0;
+            font-size: 2.5em;
+            color: #333;
+        }
+        .loader .spinner {
+            margin-top: 20px;
+            width: 50px;
+            height: 50px;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .calculator {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+        }
+        .display {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            min-height: 50px;
+            background-color: #f7f7f7;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            width: calc(100% - 30px);
+            text-align: right;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        button {
+            width: 70px;
+            height: 70px;
+            font-size: 1.5em;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        .operator {
+            background-color: #2196F3;
+        }
+        .operator:hover {
+            background-color: #1976D2;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        .operator-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .red-button {
+            background-color: #f44336;
+        }
+        .red-button:hover {
+            background-color: #e53935;
+        }
+        .divider {
+            width: 100%;
+            height: 2px;
+            background-color: #ccc;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader">
+        <h1>Carregando...</h1>
+        <div class="spinner"></div>
+    </div>
+    <div class="calculator">
+        <h1>Calculadora</h1>
+        <input type="text" id="display" class="display" value="" readonly>
+        <div class="button-container">
+            <button class="red-button" onclick="document.getElementById('display').value=''">C</button>
+            <button class="red-button" onclick="deleteLast()">Del</button>
+            <button onclick="document.getElementById('display').value+='7'">7</button>
+            <button onclick="document.getElementById('display').value+='8'">8</button>
+            <button onclick="document.getElementById('display').value+='9'">9</button>
+            <button onclick="document.getElementById('display').value+='4'">4</button>
+            <button onclick="document.getElementById('display').value+='5'">5</button>
+            <button onclick="document.getElementById('display').value+='6'">6</button>
+            <button onclick="document.getElementById('display').value+='1'">1</button>
+            <button onclick="document.getElementById('display').value+='2'">2</button>
+            <button onclick="document.getElementById('display').value+='3'">3</button>
+            <button onclick="document.getElementById('display').value=eval(document.getElementById('display').value)">=</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="operator-container">
+            <button class="operator" onclick="document.getElementById('display').value+='+'">+</button>
+            <button class="operator" onclick="document.getElementById('display').value+='-'">-</button>
+            <button class="operator" onclick="document.getElementById('display').value+='*'">x</button>
+            <button class="operator" onclick="document.getElementById('display').value+='/'">÷</button>
+        </div>
+    </div>
+
+    <script>
+        // Simular um carregamento
+        window.onload = function() {
+            setTimeout(function() {
+                document.querySelector('.loader').style.display = 'none';
+                document.querySelector('.calculator').style.display = 'block';
+            }, 2000); // Dura 2 segundos
+        };
+
+        // Função para deletar o último dígito
+        function deleteLast() {
+            const display = document.getElementById('display');
+            display.value = display.value.slice(0, -1) || ''; // Remove o último caractere ou zera se vazio
+        }
+    </script>
+</body>
+</html>
